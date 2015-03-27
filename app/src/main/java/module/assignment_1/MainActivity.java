@@ -2,7 +2,7 @@ package module.assignment_1;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
+import android.widget.Toast;
 
 
 /**
@@ -12,34 +12,38 @@ public class MainActivity extends ActionBarActivity {
 
     static final String mGivenString = "asnmnshtadfgmnstksjdkjhasdjkaasdsadgadfgmnstsdjadaklsjdlka";
     private static final String TAG = "###MainActivity###";
-    private int firstChar, repeated = 0;
-    private int length;
     private char[] charArray;
-    private boolean isLast = false;
+    private boolean mIsUniqueCharFound = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         charArray = mGivenString.toCharArray();
-        length = mGivenString.length();
+
+        /**
+         * Question:
+         * Find the first non-repeated (unique) character in a given(mGivenString) string.
+         *
+         * Logic:
+         * get each char from a string
+         * split mGivenString with the char
+         * check the length of that split string array
+         * if split string array length == 2 or == 1 unique char found
+         * else no unique char in a mGivenString
+         */
 
         for (int i = 0; i < charArray.length; i++) {
             char myChar = charArray[i];
-            Log.v(TAG, "MyChar: " + myChar);
-
-            final String lastChar = mGivenString.substring(mGivenString.length() - 1);
-            if (lastChar.equalsIgnoreCase("" + myChar))
-                isLast = true;
-            else
-                isLast = false;
 
             String[] splitArray = mGivenString.split("" + myChar);
-            if (splitArray.length <= 2 && !isLast) {
-                Log.v(TAG, "Unique Char: " + myChar);
+            if (splitArray.length == 2 || splitArray.length == 1) {
+                Toast.makeText(this, "Unique char: " + myChar, Toast.LENGTH_SHORT).show();
+                mIsUniqueCharFound = true;
                 break;
             }
         }
-
+        if (!mIsUniqueCharFound)
+            Toast.makeText(this, "Unique char not found", Toast.LENGTH_SHORT).show();
     }
 }
